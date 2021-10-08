@@ -59,16 +59,32 @@ class ViewController: UIViewController {
         }
     }
     
+//    private func extract(data: Data, period: WeatherForecastRoute) {
+//        switch period {
+//        case .current:
+//            let parsedData = data.parse(to: CurrentWeather.self)
+//            switch parsedData {
+//            case .success(let currentWeatherData):
+//                self.currentWeather = currentWeatherData
+//            case .failure(let parsingError):
+//                assertionFailure(parsingError.localizedDescription)
+//            }
+//        case .fiveDay:
+//            let parsedData = data.parse(to: FiveDayWeather.self)
+//            switch parsedData {
+//            case .success(let fiveDayWeatherData):
+//                self.fiveDayWeather = fiveDayWeatherData
+//            case .failure(let parsingError):
+//                assertionFailure(parsingError.localizedDescription)
+//            }
+//        }
+//    }
+    
     private func extract(data: Data, period: WeatherForecastRoute) {
         switch period {
         case .current:
             let parsedData = data.parse(to: CurrentWeather.self)
-            switch parsedData {
-            case .success(let currentWeatherData):
-                self.currentWeather = currentWeatherData
-            case .failure(let parsingError):
-                assertionFailure(parsingError.localizedDescription)
-            }
+            filter(parsedData: parsedData)
         case .fiveDay:
             let parsedData = data.parse(to: FiveDayWeather.self)
             switch parsedData {
@@ -79,5 +95,23 @@ class ViewController: UIViewController {
             }
         }
     }
+    
+    func filter(parsedData: Result<WeatherModel, ParsingError>) {
+        switch parsedData {
+        case .success(let data):
+            if let weatherData = data as? CurrentWeather {
+                currentWeather = weatherData
+            } else if let weatherData = data as? FiveDayWeather {
+                fiveDayWeather = weatherData
+            }
+        case .failure(let parsingError):
+            assertionFailure(parsingError.localizedDescription)
+        }
+    }
 
 }
+
+
+protocol WeatherModel {}
+extension CurrentWeather: WeatherModel {}
+extension FiveDayWeather: WeatherModel {}
