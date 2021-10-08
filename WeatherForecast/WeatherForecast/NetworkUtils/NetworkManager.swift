@@ -14,13 +14,14 @@ struct NetworkManager {
         self.networkable = networkable
     }
     
-    mutating func request(with route: Route,
+    mutating func request<T: Decodable>(type: T,
+                                        with route: Route,
                           queryItems: [URLQueryItem]?,
                           header: [String: String]? = nil,
                           bodyParameters: [String: Any]? = nil,
                           httpMethod: HTTPMethod,
                           requestType: URLRequestTask,
-                          completionHandler: @escaping (Result<Data, Error>) -> Void)
+                          completionHandler: @escaping (Result<T, Error>) -> Void)
     {
         
         guard let urlRequest = requestType.buildRequest(route: route,
@@ -32,6 +33,6 @@ struct NetworkManager {
             completionHandler(.failure(NetworkError.invalidURL))
             return
         }
-        networkable.runDataTask(request: urlRequest, completionHandler: completionHandler)
+        networkable.runDataTask(type: type, request: urlRequest, completionHandler: completionHandler)
     }
 }

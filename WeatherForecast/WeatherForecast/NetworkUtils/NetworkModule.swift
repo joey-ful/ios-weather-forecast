@@ -11,8 +11,8 @@ struct NetworkModule: Networkable {
     private let rangeOfSuccessState = 200...299
     private var dataTask: [URLSessionDataTask] = []
     
-    mutating func runDataTask(request: URLRequest,
-                              completionHandler: @escaping (Result<Data, Error>) -> Void) {
+    mutating func runDataTask<T: Decodable>(type: T, request: URLRequest,
+                              completionHandler: @escaping (Result<T, Error>) -> Void) {
         dataTask.enumerated().forEach { (index, task) in
             if let originalRequest = task.originalRequest,
                originalRequest == request {
@@ -45,8 +45,19 @@ struct NetworkModule: Networkable {
             }
             
             DispatchQueue.main.async {
-                completionHandler(.success(data))
+                let result = data.parse(to: T.self)
+                switch result {
+                case .success(let parsed):
+                    completionHandler(.success(parsed))
+                case .failure(let error):
+                    completionHandler(.failure(error))
+                }
+                
             }
+            
+//            DispatchQueue.main.async {
+//                completionHandler(.success(data))
+//            }
         }
         task.resume()
         dataTask.append(task)
