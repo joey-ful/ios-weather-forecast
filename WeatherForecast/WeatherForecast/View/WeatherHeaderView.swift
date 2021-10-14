@@ -56,15 +56,22 @@ class WeatherHeaderView: UICollectionReusableView {
     }
     
     private func setLayoutForCurrentWeatherStackView() {
+//        NSLayoutConstraint.activate([
+//            currentWeatherStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 5),
+//            currentWeatherStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
+//            currentWeatherStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+//            currentWeatherStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+//        ])
+        addSubview(temperatureLabel)
         NSLayoutConstraint.activate([
-            currentWeatherStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor, constant: 5),
-            currentWeatherStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            currentWeatherStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            currentWeatherStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            temperatureLabel.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor, constant: 5),
+            temperatureLabel.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
+            temperatureLabel.topAnchor.constraint(equalTo: layoutMarginsGuide.topAnchor),
+            temperatureLabel.bottomAnchor.constraint(equalTo: layoutMarginsGuide.bottomAnchor),
         ])
     }
     
-    private func makeLabel(text: String, font: UIFont.TextStyle) -> UILabel {
+    private func makeLabel(text: String?, font: UIFont.TextStyle) -> UILabel {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = .systemGray
@@ -74,11 +81,11 @@ class WeatherHeaderView: UICollectionReusableView {
         return label
     }
     
-    func configureContents(from currentWeather: WeatherHeader) {
-        addressLabel = makeLabel(text: currentWeather.address, font: .title3)
-        maxTemperatureLabel = makeLabel(text: currentWeather.maxTemperature, font: .title3)
-        minTemperatureLabel = makeLabel(text: currentWeather.minTemperature, font: .title3)
-        temperatureLabel = makeLabel(text: currentWeather.temperature, font: .title2)
-        weatherIcon = UIImageView(image: currentWeather.image)
+    func configureContents(from currentWeather: WeatherHeader?) {
+        addressLabel = makeLabel(text: currentWeather?.address, font: .title3)
+        maxTemperatureLabel = makeLabel(text: currentWeather?.maxTemperature, font: .title3)
+        minTemperatureLabel = makeLabel(text: currentWeather?.minTemperature, font: .title3)
+        temperatureLabel = makeLabel(text: currentWeather?.temperature, font: .title2)
+        weatherIcon = UIImageView(image: currentWeather?.image)
     }
 }

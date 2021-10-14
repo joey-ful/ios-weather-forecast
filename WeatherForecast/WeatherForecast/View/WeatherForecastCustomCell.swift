@@ -9,6 +9,7 @@ import UIKit
 
 class WeatherForecastCustomCell: UICollectionViewCell {
     static let identifier = "fiveDay"
+    private var imageDataTask: URLSessionDataTask?
     
     let dateLabel: UILabel = {
         let dateLabel = UILabel()
@@ -56,6 +57,12 @@ class WeatherForecastCustomCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageDataTask?.cancel()
+        imageDataTask = nil
+    }
+    
     func setLayoutForStackView() {
         NSLayoutConstraint.activate([
             horizontalStackView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor),
@@ -64,4 +71,26 @@ class WeatherForecastCustomCell: UICollectionViewCell {
             horizontalStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
     }
+    
+    func configure(image: UIImage?) {
+        if let image = image {
+            weatherImage.image = image
+        }
+    }
+    
+    func configure(date: Int, temparature: Double, dataTask: URLSessionDataTask?) {
+        resetContents()
+        
+        dateLabel.text = date.description
+        imageDataTask = dataTask
+        temperatureLabel.text = temparature.description + "°"
+    }
+    
+    func resetContents() {
+        dateLabel.text = nil
+        temperatureLabel.text = nil
+        weatherImage.image = nil
+    }
 }
+
+
