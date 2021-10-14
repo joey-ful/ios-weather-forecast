@@ -18,6 +18,7 @@
 		D468445427159F2800B26357 /* WeatherForecastCustomCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D468445327159F2800B26357 /* WeatherForecastCustomCell.swift */; };
 		D46844672716CECA00B26357 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D46844662716CECA00B26357 /* ImageManager.swift */; };
 		D468446C2716D23300B26357 /* MediaNetworkable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D468446B2716D23300B26357 /* MediaNetworkable.swift */; };
+		D4726B6E2717AF6C008FAB6C /* WeatherHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4726B6D2717AF6C008FAB6C /* WeatherHeaderView.swift */; };
 		D488668E2705EC870044CEF5 /* WeatherForecastRoute.swift in Sources */ = {isa = PBXBuildFile; fileRef = D488668D2705EC870044CEF5 /* WeatherForecastRoute.swift */; };
 		D48866A4270608C10044CEF5 /* Networkable.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48866A3270608C10044CEF5 /* Networkable.swift */; };
 		D48866A9270609700044CEF5 /* NetworkModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D48866A8270609700044CEF5 /* NetworkModule.swift */; };
@@ -72,6 +73,7 @@
 		D468445327159F2800B26357 /* WeatherForecastCustomCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherForecastCustomCell.swift; sourceTree = "<group>"; };
 		D46844662716CECA00B26357 /* ImageManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
 		D468446B2716D23300B26357 /* MediaNetworkable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MediaNetworkable.swift; sourceTree = "<group>"; };
+		D4726B6D2717AF6C008FAB6C /* WeatherHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherHeaderView.swift; sourceTree = "<group>"; };
 		D488668D2705EC870044CEF5 /* WeatherForecastRoute.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherForecastRoute.swift; sourceTree = "<group>"; };
 		D48866A3270608C10044CEF5 /* Networkable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Networkable.swift; sourceTree = "<group>"; };
 		D48866A8270609700044CEF5 /* NetworkModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkModule.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 			isa = PBXGroup;
 			children = (
 				D468445327159F2800B26357 /* WeatherForecastCustomCell.swift */,
+				D4726B6D2717AF6C008FAB6C /* WeatherHeaderView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -396,6 +399,7 @@
 				D48866A9270609700044CEF5 /* NetworkModule.swift in Sources */,
 				E6C277B1270451620033FC67 /* APIKey.swift in Sources */,
 				D4DDB12727046C93004996CA /* NetworkError.swift in Sources */,
+				D4726B6E2717AF6C008FAB6C /* WeatherHeaderView.swift in Sources */,
 				D4DDB0FA27030203004996CA /* FiveDayWeather.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -566,7 +570,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = WeatherForecast/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -585,7 +589,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = WeatherForecast/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.3;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -24,7 +24,7 @@ class WeatherForecastCustomCell: UICollectionViewCell {
         let temperatureLabel = UILabel()
         temperatureLabel.translatesAutoresizingMaskIntoConstraints = false
         temperatureLabel.font = UIFont.preferredFont(forTextStyle: .title2)
-        temperatureLabel.textColor = .white
+        temperatureLabel.textColor = .systemGray
         temperatureLabel.adjustsFontForContentSizeCategory = true
         return temperatureLabel
     }()
@@ -36,7 +36,7 @@ class WeatherForecastCustomCell: UICollectionViewCell {
     }()
     
     lazy var horizontalStackView: UIStackView = {
-        var horizontalStackView = UIStackView(arrangedSubviews: [dateLabel, temperatureLabel])
+        var horizontalStackView = UIStackView(arrangedSubviews: [dateLabel, temperatureLabel, weatherImage])
         horizontalStackView.alignment = .fill
         horizontalStackView.distribution = .fill
         horizontalStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -51,7 +51,7 @@ class WeatherForecastCustomCell: UICollectionViewCell {
         
         setLayoutForStackView()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -63,5 +63,9 @@ class WeatherForecastCustomCell: UICollectionViewCell {
             horizontalStackView.topAnchor.constraint(equalTo: contentView.topAnchor),
             horizontalStackView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
+    }
+    
+    func configure() {
+        
     }
 }
