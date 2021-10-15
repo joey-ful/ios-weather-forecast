@@ -23,16 +23,20 @@ class WeatherHeaderView: UICollectionReusableView {
     private var presentLocationSelector: (()-> Void)?
     private lazy var locationSelectButton: UIButton = {
         let locationSelectButton = UIButton()
-        locationSelectButton.titleLabel?.text = "위치설정"
-        locationSelectButton.titleLabel?.textColor = .systemGray
+        locationSelectButton.setTitle("위치설정", for: .normal)
+        locationSelectButton.setTitleColor(.systemGray, for: .normal)
+        
         locationSelectButton.addAction(UIAction(handler: { [weak self] _ in
+            print("button clicked")
             self?.presentLocationSelector?()
         }), for: .touchUpInside)
+
         addSubview(locationSelectButton)
         locationSelectButton.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            locationSelectButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
-            locationSelectButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: 5)
+            locationSelectButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,
+                                                           constant: -5),
+            locationSelectButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor)
         ])
 
         return locationSelectButton
@@ -89,7 +93,8 @@ class WeatherHeaderView: UICollectionReusableView {
         NSLayoutConstraint.activate([
             currentWeatherStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor,
                                                              constant: 5),
-            currentWeatherStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,constant: 5),
+            currentWeatherStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,
+                                                              constant: 5),
             currentWeatherStackView.topAnchor.constraint(equalTo: addressLabel.bottomAnchor),
             currentWeatherStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
         ])
@@ -105,8 +110,12 @@ class WeatherHeaderView: UICollectionReusableView {
     }
     
     func configureContents(from currentWeather: WeatherHeader?) {
-        if let adress = currentWeather?.address {
-            addressLabel.text = adress
+        locationSelectButton.titleLabel?.text = "위치설정"
+        addressLabel.textColor = .black
+        if let address = currentWeather?.address, address != " " {
+            addressLabel.text = address
+        } else {
+            addressLabel.text = "-"
         }
         if let maxTemperature = currentWeather?.maxTemperature {
             maxTemperatureLabel.text = "최고 " + maxTemperature + "°"
@@ -117,7 +126,7 @@ class WeatherHeaderView: UICollectionReusableView {
         if let temperature = currentWeather?.temperature {
             temperatureLabel.text = temperature + "°"
         }
-        locationSelectButton.titleLabel?.text = "위치설정"
+        
         weatherIcon.image = currentWeather?.image
     }
 }
