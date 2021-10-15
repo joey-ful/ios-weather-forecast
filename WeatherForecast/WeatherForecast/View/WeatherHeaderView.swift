@@ -8,10 +8,36 @@
 import UIKit
 
 class WeatherHeaderView: UICollectionReusableView {
-    lazy var addressLabel = makeLabel(font: .caption1)
+    lazy var addressLabel: UILabel = {
+        let adressLabel = makeLabel(font: .caption1)
+        addSubview(adressLabel)
+        NSLayoutConstraint.activate([
+            adressLabel.leadingAnchor.constraint(equalTo: infoStackView.leadingAnchor),
+            adressLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 5)
+        ])
+        return adressLabel
+    }()
     lazy var maxTemperatureLabel = makeLabel(font: .callout)
     lazy var minTemperatureLabel = makeLabel(font: .callout)
     lazy var temperatureLabel = makeLabel(font: .title1)
+    private var presentLocationSelector: (()-> Void)?
+    private lazy var locationSelectButton: UIButton = {
+        let locationSelectButton = UIButton()
+        locationSelectButton.titleLabel?.text = "위치설정"
+        locationSelectButton.titleLabel?.textColor = .systemGray
+        locationSelectButton.addAction(UIAction(handler: { [weak self] _ in
+            self?.presentLocationSelector?()
+        }), for: .touchUpInside)
+        addSubview(locationSelectButton)
+        locationSelectButton.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            locationSelectButton.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            locationSelectButton.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor, constant: 5)
+        ])
+
+        return locationSelectButton
+    }()
+    
     lazy var weatherIcon: UIImageView = {
         let imageView = UIImageView()
         imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
@@ -29,7 +55,7 @@ class WeatherHeaderView: UICollectionReusableView {
     }()
     
     lazy var infoStackView: UIStackView = {
-        var infoStackView = UIStackView(arrangedSubviews: [addressLabel, maxMinStackView, temperatureLabel])
+        var infoStackView = UIStackView(arrangedSubviews: [maxMinStackView, temperatureLabel])
         infoStackView.translatesAutoresizingMaskIntoConstraints = false
         infoStackView.alignment = .leading
         infoStackView.distribution = .fill
@@ -63,8 +89,8 @@ class WeatherHeaderView: UICollectionReusableView {
         NSLayoutConstraint.activate([
             currentWeatherStackView.leadingAnchor.constraint(equalTo: safeAreaLayoutGuide.leadingAnchor,
                                                              constant: 5),
-            currentWeatherStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor),
-            currentWeatherStackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            currentWeatherStackView.trailingAnchor.constraint(equalTo: safeAreaLayoutGuide.trailingAnchor,constant: 5),
+            currentWeatherStackView.topAnchor.constraint(equalTo: addressLabel.bottomAnchor),
             currentWeatherStackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
         ])
     }
@@ -79,7 +105,9 @@ class WeatherHeaderView: UICollectionReusableView {
     }
     
     func configureContents(from currentWeather: WeatherHeader?) {
-        addressLabel.text = currentWeather?.address
+        if let adress = currentWeather?.address {
+            addressLabel.text = adress
+        }
         if let maxTemperature = currentWeather?.maxTemperature {
             maxTemperatureLabel.text = "최고 " + maxTemperature + "°"
         }
@@ -89,6 +117,7 @@ class WeatherHeaderView: UICollectionReusableView {
         if let temperature = currentWeather?.temperature {
             temperatureLabel.text = temperature + "°"
         }
+        locationSelectButton.titleLabel?.text = "위치설정"
         weatherIcon.image = currentWeather?.image
     }
 }
