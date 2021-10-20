@@ -9,6 +9,28 @@ import CoreLocation
 
 typealias DataSource = UICollectionViewDiffableDataSource<WeatherHeader, FiveDayWeather.List>
 
+class FirstViewController: UIViewController {
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        print(#function, self)
+        view.backgroundColor = .white
+        let button = UIButton()
+        button.setTitle("이동", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.addTarget(self, action: #selector(move), for: .touchUpInside)
+        view.addSubview(button)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor).isActive = true
+        button.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor).isActive = true
+    }
+    
+    @objc func move() {
+        let nextVC = WeatherForecastViewController()
+        navigationController?.pushViewController(nextVC, animated: true)
+    }
+}
+
 final class WeatherForecastViewController: UIViewController {
     private var networkManager = NetworkManager()
     private let locationManager = LocationManager()
@@ -34,20 +56,24 @@ final class WeatherForecastViewController: UIViewController {
         configureRefreshControl()
     }
     
+    deinit {
+        print(#function, self)
+    }
+    
     private func initAlert() -> UIAlertController {
         if address.combined == " " {
-            return UIAlertController.makeInvalidLocationAlert { alert in
-                let latitude = alert.textFields?[0].text
-                let longitude = alert.textFields?[1].text
-                self.initData(latitude: latitude, longitude: longitude)
+            return UIAlertController.makeInvalidLocationAlert { [weak self] alert in
+                let latitude = alert?.textFields?[0].text
+                let longitude = alert?.textFields?[1].text
+                self?.initData(latitude: latitude, longitude: longitude)
             }
         } else {
-            return UIAlertController.makeValidLocationAlert{ alert in
-                let latitude = alert.textFields?[0].text
-                let longitude = alert.textFields?[1].text
-                self.initData(latitude: latitude, longitude: longitude)
-            } resetToCurrentLocationHandler: {
-                self.initData()
+            return UIAlertController.makeValidLocationAlert{ [weak self] alert in
+                let latitude = alert?.textFields?[0].text
+                let longitude = alert?.textFields?[1].text
+                self?.initData(latitude: latitude, longitude: longitude)
+            } resetToCurrentLocationHandler: { [weak self] in
+                self?.initData()
             }
         }
     }

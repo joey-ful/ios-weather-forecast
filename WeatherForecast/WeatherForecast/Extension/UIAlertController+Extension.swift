@@ -9,7 +9,7 @@ import UIKit
 
 extension UIAlertController {
     static func makeValidLocationAlert(
-        changeHandler: @escaping (UIAlertController) -> Void,
+        changeHandler: @escaping (UIAlertController?) -> Void,
         resetToCurrentLocationHandler: @escaping () -> Void) -> UIAlertController {
         
         let alert = UIAlertController(title: "위치변경", message: "변경할 좌표를 선택해주세요", preferredStyle: .alert)
@@ -21,7 +21,7 @@ extension UIAlertController {
             textfiled.placeholder = Placeholder.longitude.text
         }
 
-        let changeAction = UIAlertAction(title: "변경", style: .default) {_ in
+        let changeAction = UIAlertAction(title: "변경", style: .default) { [weak alert] _ in
             changeHandler(alert)
         }
         let resetToCurrentLocationAction = UIAlertAction(title: "현재 위치로 재설정", style: .default) { _ in
@@ -38,7 +38,7 @@ extension UIAlertController {
     }
     
     static func makeInvalidLocationAlert(
-        changeHandler: @escaping (UIAlertController) -> Void) -> UIAlertController {
+        changeHandler: @escaping (UIAlertController?) -> Void) -> UIAlertController {
         
         let alert = UIAlertController(title: "위치변경",
                                       message: "날씨를 받아올 위치의 위도와 경도를 입력해주세요.",
@@ -51,7 +51,7 @@ extension UIAlertController {
             textfiled.placeholder = Placeholder.longitude.text
         }
         
-        let changeAction = UIAlertAction(title: "변경", style: .default) {_ in
+        let changeAction = UIAlertAction(title: "변경", style: .default) { [weak alert] _ in
             changeHandler(alert)
         }
         let cancelAction = UIAlertAction(title: "취소", style: .cancel)
