@@ -225,7 +225,7 @@ extension WeatherForecastViewController {
                 }
             }
             cell.configure(date: fiveDayWeatherItem.UnixForecastTime,
-                           temparature: fiveDayWeatherItem.main.temperature)
+                           temperature: fiveDayWeatherItem.main.temperature)
         }
         
         dataSource = DataSource(collectionView: collecionView) { collectionView, indexPath, itemIdentifier in

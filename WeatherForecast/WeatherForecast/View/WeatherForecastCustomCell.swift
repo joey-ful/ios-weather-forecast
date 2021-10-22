@@ -58,11 +58,11 @@ final class WeatherForecastCustomCell: UICollectionViewCell {
         }
     }
     
-    func configure(date: Int, temparature: Double) {
+    func configure(date: Int, temperature: Double) {
         resetContents()
         
         dateLabel.text = DateFormatter.format(date: date)
-        temperatureLabel.text = TemperatureManager.convert(kelvinValue: temparature, fractionalCount: 1)
+        temperatureLabel.text = TemperatureManager.convert(kelvinValue: temperature, fractionalCount: 1)
     }
     
     private func resetContents() {
