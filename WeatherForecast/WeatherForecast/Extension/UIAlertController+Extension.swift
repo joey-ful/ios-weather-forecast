@@ -29,7 +29,7 @@ extension UIAlertController {
                 return
             }
             
-            let newLocation = Coordinates(longitude: Double(longitude), latitude: Double(latitude))
+            let newLocation = Coordinates(latitude: Double(latitude), longitude: Double(longitude))
             NotificationCenter.default.post(name: .changeLocationNotification,
                                             object: nil,
                                             userInfo: ["newLocation" : newLocation])
@@ -37,7 +37,7 @@ extension UIAlertController {
         
         let resetToCurrentLocationAction = UIAlertAction(title: "Reset to Current Location".localized(),
                                                          style: .default) { _ in
-            let newLocation = Coordinates(longitude: nil, latitude: nil)
+            let newLocation = Coordinates(latitude: nil, longitude: nil)
             NotificationCenter.default.post(name: .changeLocationNotification,
                                             object: nil,
                                             userInfo: ["newLocation" : newLocation])
@@ -82,7 +82,7 @@ extension UIAlertController {
                 return
             }
             
-            let newLocation = Coordinates(longitude: longitudeNumber, latitude: latitudeNumber)
+            let newLocation = Coordinates(latitude: latitudeNumber, longitude: longitudeNumber)
     
             NotificationCenter.default.post(name: .changeLocationNotification,
                                             object: nil,
