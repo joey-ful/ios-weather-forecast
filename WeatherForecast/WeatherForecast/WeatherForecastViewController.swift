@@ -34,6 +34,9 @@ final class WeatherForecastViewController: UIViewController {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(updateLocation),
                                                name: .changeLocationNotification, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(updateLocation),
+                                               name: .didUpdateLocationNotification, object: nil)
     }
     
     override func viewWillTransition(to size: CGSize,
@@ -119,7 +122,7 @@ final class WeatherForecastViewController: UIViewController {
                 case .success(let data):
                     self.extract(data: data, period: route)
                 case .failure(let networkError):
-                    if networkError.localizedDescription != "cancelled" {
+                    if networkError.localizedDescription != "cancelled".localized() {
                         assertionFailure(networkError.localizedDescription)
                     }
                 }

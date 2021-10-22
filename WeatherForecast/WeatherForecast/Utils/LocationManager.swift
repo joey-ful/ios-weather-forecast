@@ -15,6 +15,8 @@ final class LocationManager: NSObject {
         super.init()
         manager.delegate = self
         manager.requestAlwaysAuthorization()
+        manager.desiredAccuracy = kCLLocationAccuracyHundredMeters
+        manager.requestLocation()
     }
     
     func getGeographicCoordinates() -> CLLocation? {
@@ -23,7 +25,6 @@ final class LocationManager: NSObject {
         
         switch status {
         case .authorizedAlways, .authorizedWhenInUse:
-            manager.requestLocation()
             guard let location = manager.location else { return nil }
             return location
         default:
@@ -62,6 +63,14 @@ final class LocationManager: NSObject {
 extension LocationManager: CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print(#function, self)
+        print(locations)
+        
+        guard let location = locations.last else { return }
+        manager.requestLocation()
+        let newLocation = Coordinates(longitude: location.coordinate.longitude, latitude: location.coordinate.latitude)
+        NotificationCenter.default.post(name: .didUpdateLocationNotification, object: nil, userInfo: ["newLocation": newLocation])
+        
         return
 
     }

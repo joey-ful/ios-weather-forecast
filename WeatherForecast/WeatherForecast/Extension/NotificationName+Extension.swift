@@ -9,4 +9,5 @@ import Foundation
 
 extension Notification.Name {
     static let changeLocationNotification = Notification.Name("changeLocationNotification")
+    static let didUpdateLocationNotification = Notification.Name("didUpdateLocationNotification")
 }

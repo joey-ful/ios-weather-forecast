@@ -14,6 +14,7 @@
 "Longitude" = "경도";
 "Change" = "변경";
 "Cancel" = "취소";
+"cancelled" = "취소됨";
 "Reset to Current Location" = "현재 위치로 재설정";
 "Please enter the coordinates" = "변경할 좌표를 선택해주세요";
 "Please enter the coordinates of where you would like to get the weather of." = "날씨를 받아올 위치의 위도와 경도를 입력해주세요.";
