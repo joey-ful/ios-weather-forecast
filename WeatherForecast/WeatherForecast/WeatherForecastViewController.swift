@@ -210,20 +210,23 @@ extension WeatherForecastViewController {
     
     private func registerCell() {
         let cellRegistration = UICollectionView.CellRegistration
-        <WeatherForecastCustomCell, FiveDayWeather.List> { (cell, indexPath, fiveDayWeatherItem) in
+        <WeatherForecastCustomCell, FiveDayWeather.List> { [weak self] (cell, indexPath, fiveDayWeatherItem) in
             let iconID = fiveDayWeatherItem.weather[0].icon
-            let currentImageURL = self.imageURL(of: iconID)
-            cell.urlString = currentImageURL
-            self.imageManager.loadImage(with: currentImageURL) { result in
-                if currentImageURL == cell.urlString {
-                    switch result {
-                    case .success(let image):
-                        cell.configure(image: image)
-                    case .failure:
-                        cell.configure(image: UIImage(systemName: "photo"))
+            
+            if let currentImageURL = self?.imageURL(of: iconID) {
+                cell.urlString = currentImageURL
+                self?.imageManager.loadImage(with: currentImageURL) { result in
+                    if currentImageURL == cell.urlString {
+                        switch result {
+                        case .success(let image):
+                            cell.configure(image: image)
+                        case .failure:
+                            cell.configure(image: UIImage(systemName: "photo"))
+                        }
                     }
                 }
             }
+            
             cell.configure(date: fiveDayWeatherItem.UnixForecastTime,
                            temperature: fiveDayWeatherItem.main.temperature)
         }
@@ -238,13 +241,13 @@ extension WeatherForecastViewController {
     private func registerHeader() {
         let headerRegistration = UICollectionView.SupplementaryRegistration
         <WeatherHeaderView>(elementKind: UICollectionView.elementKindSectionHeader)
-        { headerView, elementKind, indexPath in
-            let headerItem = self.dataSource?.snapshot().sectionIdentifiers[indexPath.section]
+        { [weak self] headerView, elementKind, indexPath in
+            let headerItem = self?.dataSource?.snapshot().sectionIdentifiers[indexPath.section]
             
-            
-            let buttonType: LocationSelectButtonType = self.address.combined == " " ? .invalid : .valid
+            let buttonType: LocationSelectButtonType = self?.address.combined == " " ? .invalid : .valid
             headerView.configureLocationSelectButton(button: buttonType) {
-                self.present(self.alert, animated: true, completion: nil)
+                guard let alert = self?.alert else { return }
+                self?.present(alert, animated: true, completion: nil)
             }
             headerView.configureContents(from: headerItem)
         }
