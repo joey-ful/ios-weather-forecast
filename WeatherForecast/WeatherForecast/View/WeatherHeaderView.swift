@@ -108,12 +108,12 @@ final class WeatherHeaderView: UICollectionReusableView {
             addressLabel.text = "-"
         }
         if let maxTemperature = currentWeather?.maxTemperature {
-            maxTemperatureLabel.text = "Max ".localized() + TemperatureManager.convert(kelvinValue: maxTemperature,
-                                                                                       fractionalCount: 1)
+            maxTemperatureLabel.text = "Max ".localized()
+                + TemperatureManager.convert(kelvinValue: maxTemperature, fractionalCount: 1)
         }
         if let minTemperature = currentWeather?.minTemperature {
-            minTemperatureLabel.text = "Min ".localized() + TemperatureManager.convert(kelvinValue: minTemperature,
-                                                                                       fractionalCount: 1)
+            minTemperatureLabel.text = "Min ".localized()
+                + TemperatureManager.convert(kelvinValue: minTemperature, fractionalCount: 1)
         }
         if let temperature = currentWeather?.temperature {
             temperatureLabel.text = TemperatureManager.convert(kelvinValue: temperature, fractionalCount: 1)

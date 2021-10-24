@@ -49,7 +49,7 @@ final class WeatherForecastViewController: UIViewController {
             backgroundImage.image = image
         }
         backgroundImage.contentMode = UIView.ContentMode.scaleAspectFill
-        self.view.insertSubview(backgroundImage, at: 0)
+        view.insertSubview(backgroundImage, at: 0)
     }
     
     private func initAlert() -> UIAlertController {
@@ -162,7 +162,7 @@ final class WeatherForecastViewController: UIViewController {
                     self.downloadDataGroup.leave()
                 }
             } else if let fiveDayWeatherData = data as? FiveDayWeather {
-                self.fiveDayWeathers = fiveDayWeatherData.list
+                fiveDayWeathers = fiveDayWeatherData.list
                 downloadDataGroup.leave()
             }
         case .failure(let parsingError):
@@ -274,7 +274,7 @@ extension WeatherForecastViewController {
     
     @objc private func handleRefreshControl() {
         initData()
-        self.collecionView.refreshControl?.endRefreshing()
+        collecionView.refreshControl?.endRefreshing()
     }
 }
 
