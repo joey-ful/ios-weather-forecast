@@ -126,4 +126,12 @@ final class WeatherHeaderView: UICollectionReusableView {
         locationSelectButton.setTitle(button.text, for: .normal)
         presentLocationSelector = action
     }
+    
+    override func prepareForReuse() {
+        addressLabel.text = "-"
+        maxTemperatureLabel.text = "-"
+        minTemperatureLabel.text = "-"
+        temperatureLabel.text = "-"
+        weatherIcon.image = nil
+    }
 }

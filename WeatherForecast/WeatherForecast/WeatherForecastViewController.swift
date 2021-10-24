@@ -70,6 +70,10 @@ final class WeatherForecastViewController: UIViewController {
         }
         
         guard let location = currentLocation else {
+            currentWeatherHeader = WeatherHeader()
+            fiveDayWeathers = []
+            address = Address()
+            makeSnapshot()
             return
         }
         
